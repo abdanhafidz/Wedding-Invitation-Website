@@ -1,7 +1,9 @@
 # Wedding Invitation Website
+
 ## By : Abdan Hafidz | NRP. 5054231 (021)
 
 ## Link : <a href="https://pweb5-abdan.vercel.app"> Click Here </a>
+
 ## Project Description
 
 This project is an interactive wedding invitation website built using HTML5, CSS, and JavaScript. The website is designed to provide an elegant and personalized digital experience for guests, featuring interactive elements and a responsive design.
@@ -17,6 +19,8 @@ This project is an interactive wedding invitation website built using HTML5, CSS
 7. **Smooth Scroll** - Smooth navigation between website sections
 8. **Animated Elements** - Animation elements to enhance visual experience
 
+   ![](assets/gif1.gif)
+
 ## Technologies Used
 
 - **HTML5** - For website structure and content
@@ -26,7 +30,6 @@ This project is an interactive wedding invitation website built using HTML5, CSS
 - **Font Awesome** - For visual icons
 - **Google Fonts** - For website typography
 - **Animate.css** - For element animation effects
-
 
 ## Website Structure
 
@@ -71,6 +74,7 @@ The website uses an elegant earthy tone color palette:
 ## Responsive Design
 
 The website is fully responsive with breakpoints for:
+
 - Mobile devices (< 576px)
 - Tablets (576px - 992px)
 - Desktops (> 992px)
@@ -78,6 +82,7 @@ The website is fully responsive with breakpoints for:
 ## Future Improvements
 
 Potential enhancements for future versions:
+
 - Backend integration for RSVP form submission
 - Guest-specific URL parameters
 - Digital gift registry integration
