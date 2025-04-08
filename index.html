@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8D7B68;
+            --secondary-color: #A4907C;
+            --accent-color: #C8B6A6;
+            --light-color: #F1DEC9;
+            --dark-color: #4A3F35;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            background-color: #f9f9f9;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .cursive {
+            font-family: 'Great Vibes', cursive;
+        }
+        
+        .bg-primary-custom {
+            background-color: var(--primary-color);
+        }
+        
+        .bg-secondary-custom {
+            background-color: var(--secondary-color);
+        }
+        
+        .bg-light-custom {
+            background-color: var(--light-color);
+        }
+        
+        .text-primary-custom {
+            color: var(--primary-color);
+        }
+        
+        .text-secondary-custom {
+            color: var(--secondary-color);
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Envelope Section */
+        #envelope-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-style: preserve-3d;
+        }
+        
+        .envelope:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-top: 100px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid var(--light-color);
+            border-left: 150px solid transparent;
+            transform-origin: top;
+            transition: all 0.6s cubic-bezier(.47,2.02,.31,-0.36);
+            z-index: 3;
+        }
+        
+        .envelope:hover .envelope-flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-content {
+            width: 280px;
+            height: 180px;
+            background-color: white;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+        
+        .envelope-content h3 {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .envelope-content p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .envelope-seal {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            z-index: 4;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .envelope:hover .envelope-seal {
+            opacity: 0;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: none;
+            position: relative;
+        }
+        
+        .section {
+            min-height: 100vh;
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            color: var(--dark-color);
+        }
+        
+        .hero-names {
+            font-size: 72px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-names {
+                font-size: 42px;
+            }
+        }
+        
+        .heart-divider {
+            color: var(--primary-color);
+            font-size: 30px;
+            margin: 0 20px;
+        }
+        
+        .save-date {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        
+        /* Couple Section */
+        #couple {
+            background-color: white;
+        }
+        
+        .couple-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 5px solid var(--light-color);
+        }
+        
+        .ornament {
+            max-width: 150px;
+            margin: 30px auto;
+        }
+        
+        /* Event Section */
+        #event {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80') center/cover no-repeat fixed;
+        }
+        
+        .event-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .event-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .countdown-item {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            padding: 20px 10px;
+            margin: 0 5px;
+            min-width: 80px;
+        }
+        
+        /* Gallery Section */
+        #gallery {
+            background-color: white;
+        }
+        
+        .gallery-item {
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        /* RSVP Section */
+        #rsvp {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1567016526105-22da7c13161a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat fixed;
+        }
+        
+        .form-control {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--light-color);
+            background-color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(141, 123, 104, 0.25);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        /* Animations */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* SVG Ornaments */
+        .floral-divider {
+            max-width: 300px;
+            margin: 30px auto;
+            display: block;
+        }
+        
+        /* Music Player */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Envelope Section -->
+    <section id="envelope-section" class="d-flex align-items-center justify-content-center">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-content">
+                <h3 class="cursive">Undangan Pernikahan</h3>
+                <p>Kami mengundang Anda untuk hadir di hari spesial kami</p>
+                <button class="btn btn-primary-custom" id="open-invitation">Buka Undangan</button>
+            </div>
+            <div class="envelope-seal">
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content (Hidden initially) -->
+    <div class="main-content" id="main-content">
+        <!-- Hero Section -->
+        <section id="hero" class="section">
+            <div class="container">
+                <div class="hero-content animate__animated animate__fadeIn">
+                    <h5 class="text-primary-custom mb-4">UNDANGAN PERNIKAHAN</h5>
+                    <h1 class="hero-names cursive">
+                        Andi <span class="heart-divider">&hearts;</span> Sari
+                    </h1>
+                    <p class="save-date mb-4">Sabtu, 12 Juni 2025</p>
+                    <p>Kami dengan sukacita mengundang Anda untuk berbagi kebahagiaan di hari pernikahan kami</p>
+                </div>
+            </div>
+            <div class="scroll-down">
+                <p>Scroll Down</p>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Couple Section -->
+        <section id="couple" class="section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="mb-3">Mempelai</h2>
+                    <p>Dengan hormat kami mengundang Anda untuk menghadiri pernikahan kami</p>
+                    
+                    <svg class="floral-divider" viewBox="0 0 500 50" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10,25 H140" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M360,25 H490" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M190,25 C200,10 210,40 220,25 C230,10 240,40 250,25 C260,10 270,40 280,25 C290,10 300,40 310,25" 
+                            stroke="#8D7B68" fill="none" stroke-width="1.5"/>
+                        <circle cx="175" cy="25" r="5" fill="#C8B6A6"/>
+                        <circle cx="325" cy="25" r="5" fill="#C8B6A6"/>
+                        <path d="M250,15 Q255,5 260,15 Q265,25 270,15 Q255,0 250,15" fill="#A4907C"/>
+                        <path d="M250,35 Q245,45 240,35 Q235,25 230,35 Q245,50 250,35" fill="#A4907C"/>
+                    </svg>
+                </div>
+                
+                <div class="couple-container">
+                    <div class="row align-items-center">
+                        <div class="col-md-5 text-center animate__animated animate__fadeInLeft">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80" alt="Groom" class="profile-image">
+                            <h3 class="mb-3">Andi Pratama, S.T.</h3>
+                            <p class="mb-2">Putra dari</p>
+                            <p>Bapak Hendra Wijaya &<br>Ibu Ratna Sari</p>
+                            <div class="mt-3">
+                                <a href="#" class="text-primary-custom mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2 text-center py-4">
+                            <h1 class="cursive floating">&</h1>
+                        </div>
+                        
+                        <div class="col-md-5 text-center animate__animated animate__fadeInRight">
+                            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80" alt="Bride" class="profile-image">
+                            <h3 class="mb-3">Sari Indah, M.Pd.</h3>
+                            <p class="mb-2">Putri dari</p>
+                            <p>Bapak Budi Santoso &<br>Ibu Maya Anggraini</p>
+                            <div class="mt-3">
+                                <a href="#" class="text-primary-custom mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Section -->
+        <section id="event" class="section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="mb-3">Jadwal Acara</h2>
+                    <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir di acara pernikahan kami</p>
+                    
+                    <svg class="floral-divider" viewBox="0 0 500 50" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10,25 H140" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M360,25 H490" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M190,25 C200,10 210,40 220,25 C230,10 240,40 250,25 C260,10 270,40 280,25 C290,10 300,40 310,25" 
+                            stroke="#8D7B68" fill="none" stroke-width="1.5"/>
+                        <circle cx="175" cy="25" r="5" fill="#C8B6A6"/>
+                        <circle cx="325" cy="25" r="5" fill="#C8B6A6"/>
+                        <path d="M250,15 Q255,5 260,15 Q265,25 270,15 Q255,0 250,15" fill="#A4907C"/>
+                        <path d="M250,35 Q245,45 240,35 Q235,25 230,35 Q245,50 250,35" fill="#A4907C"/>
+                    </svg>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="event-card animate__animated animate__fadeInUp">
+                            <div class="text-center">
+                                <div class="event-icon">
+                                    <i class="fas fa-ring"></i>
+                                </div>
+                                <h3 class="mb-3">Akad Nikah</h3>
+                                <p class="mb-4">Sabtu, 12 Juni 2025<br>08:00 - 10:00 WIB</p>
+                                <h5 class="mb-3">Masjid Al-Aqsha</h5>
+                                <p>Jl. Anggrek No. 123<br>Jakarta Selatan</p>
+                                <a href="#" class="btn btn-primary-custom mt-3">
+                                    <i class="fas fa-map-marker-alt me-2"></i> Lihat Lokasi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="event-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                            <div class="text-center">
+                                <div class="event-icon">
+                                    <i class="fas fa-glass-cheers"></i>
+                                </div>
+                                <h3 class="mb-3">Resepsi</h3>
+                                <p class="mb-4">Sabtu, 12 Juni 2025<br>11:00 - 14:00 WIB</p>
+                                <h5 class="mb-3">Gedung Serba Guna</h5>
+                                <p>Jl. Melati No. 456<br>Jakarta Selatan</p>
+                                <a href="#" class="btn btn-primary-custom mt-3">
+                                    <i class="fas fa-map-marker-alt me-2"></i> Lihat Lokasi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <h3 class="mb-4">Hitung Mundur Menuju Hari Bahagia</h3>
+                    <div class="d-flex justify-content-center flex-wrap" id="countdown">
+                        <div class="countdown-item m-2">
+                            <h2 id="days">00</h2>
+                            <p>Hari</p>
+                        </div>
+                        <div class="countdown-item m-2">
+                            <h2 id="hours">00</h2>
+                            <p>Jam</p>
+                        </div>
+                        <div class="countdown-item m-2">
+                            <h2 id="minutes">00</h2>
+                            <p>Menit</p>
+                        </div>
+                        <div class="countdown-item m-2">
+                            <h2 id="seconds">00</h2>
+                            <p>Detik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="mb-3">Galeri Kami</h2>
+                    <p>Beberapa momen indah yang kami lewati bersama</p>
+                    
+                    <svg class="floral-divider" viewBox="0 0 500 50" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10,25 H140" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M360,25 H490" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M190,25 C200,10 210,40 220,25 C230,10 240,40 250,25 C260,10 270,40 280,25 C290,10 300,40 310,25" 
+                            stroke="#8D7B68" fill="none" stroke-width="1.5"/>
+                        <circle cx="175" cy="25" r="5" fill="#C8B6A6"/>
+                        <circle cx="325" cy="25" r="5" fill="#C8B6A6"/>
+                        <path d="M250,15 Q255,5 260,15 Q265,25 270,15 Q255,0 250,15" fill="#A4907C"/>
+                        <path d="M250,35 Q245,45 240,35 Q235,25 230,35 Q245,50 250,35" fill="#A4907C"/>
+                    </svg>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 col-6">
+                        <div class="gallery-item animate__animated animate__fadeIn">
+                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=320&q=80" alt="Couple at beach" class="gallery-img">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="gallery-item animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                            <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=320&q=80" alt="Couple holding hands" class="gallery-img">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="gallery-item animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
+                            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=320&q=80" alt="Bride and groom" class="gallery-img">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="gallery-item animate__animated animate__fadeIn" style="animation-delay: 0.6s;">
+                            <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=320&q=80" alt="Couple kissing" class="gallery-img">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="gallery-item animate__animated animate__fadeIn" style="animation-delay: 0.8s;">
+                            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=320&q=80" alt="Couple sunset" class="gallery-img">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="gallery-item animate__animated animate__fadeIn" style="animation-delay: 1s;">
+                            <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=320&q=80" alt="Wedding rings" class="gallery-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="mb-3">Konfirmasi Kehadiran</h2>
+                    <p>Kami berharap Anda dapat hadir di hari bahagia kami. Silakan konfirmasi kehadiran Anda.</p>
+                    
+                    <svg class="floral-divider" viewBox="0 0 500 50" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10,25 H140" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M360,25 H490" stroke="#8D7B68" stroke-width="1"/>
+                        <path d="M190,25 C200,10 210,40 220,25 C230,10 240,40 250,25 C260,10 270,40 280,25 C290,10 300,40 310,25" 
+                            stroke="#8D7B68" fill="none" stroke-width="1.5"/>
+                        <circle cx="175" cy="25" r="5" fill="#C8B6A6"/>
+                        <circle cx="325" cy="25" r="5" fill="#C8B6A6"/>
+                        <path d="M250,15 Q255,5 260,15 Q265,25 270,15 Q255,0 250,15" fill="#A4907C"/>
+                        <path d="M250,35 Q245,45 240,35 Q235,25 230,35 Q245,50 250,35" fill="#A4907C"/>
+                    </svg>
+                </div>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card shadow-lg animate__animated animate__fadeInUp">
+                            <div class="card-body p-5">
+                                <form id="rsvp-form">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nama</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Masukkan nama Anda">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Masukkan email Anda">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Nomor Telepon</label>
+                                        <input type="tel" class="form-control" id="phone" placeholder="Masukkan nomor telepon Anda">
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="form-label d-block">Kehadiran</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="attendance" id="attend-yes" value="yes">
+                                            <label class="form-check-label" for="attend-yes">Ya, Saya akan hadir</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="attendance" id="attend-no" value="no">
+                                            <label class="form-check-label" for="attend-no">Maaf, Saya tidak bisa hadir</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="guests" class="form-label">Jumlah Tamu</label>
+                                        <select class="form-control" id="guests">
+                                            <option value="1">1 Orang</option>
+                                            <option value="2">2 Orang</option>
+                                            <option value="3">3 Orang</option>
+                                            <option value="4">4 Orang</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="message" class="form-label">Ucapan & Doa</label>
+                                        <textarea class="form-control" id="message" rows="4" placeholder="Tulis ucapan dan doa untuk mempelai"></textarea>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary-custom px-5 py-3">Kirim</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-5 text-center">
+                            <h4 class="mb-4">Kirim Hadiah</h4>
+                            <p>Doa restu Anda merupakan karunia yang sangat berarti bagi kami, namun jika memberi adalah ungkapan kasih Anda, Anda dapat mengirimkan hadiah melalui:</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body p-4">
+                                            <h5>Bank BCA</h5>
+                                            <p class="mb-2">Andi Pratama</p>
+                                            <p class="mb-0">1234 5678 9012 3456</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body p-4">
+                                            <h5>Bank Mandiri</h5>
+                                            <p class="mb-2">Sari Indah</p>
+                                            <p class="mb-0">9876 5432 1098 7654</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <h3 class="cursive mb-4">Andi & Sari</h3>
+                <p>Terima kasih atas doa dan restu Anda</p>
+                <p class="mt-4">&copy; 2025 Abdan Hafidz</p>
+            </div>
+        </footer>
+
+        <!-- Music Control -->
+        <div class="music-control" id="music-control">
+            <i class="fas fa-music"></i>
+            <audio id="background-music" loop>
+                <source src="" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Envelope opening functionality
+            const envelope = document.getElementById('envelope');
+            const openInvitationBtn = document.getElementById('open-invitation');
+            const envelopeSection = document.getElementById('envelope-section');
+            const mainContent = document.getElementById('main-content');
+            
+            openInvitationBtn.addEventListener('click', function() {
+                // Play opening animation
+                envelope.style.transform = 'scale(15)';
+                envelope.style.opacity = '0';
+                
+                // Wait for animation to complete then show main content
+                setTimeout(function() {
+                    envelopeSection.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    
+                    // Initialize background music
+                    const backgroundMusic = document.getElementById('background-music');
+                    backgroundMusic.volume = 0.3;
+                    backgroundMusic.pause();
+                    
+                    // Add scroll animations
+                    const animateElements = document.querySelectorAll('.animate__animated');
+                    
+                    function checkIfInView() {
+                        animateElements.forEach(function(element) {
+                            const rect = element.getBoundingClientRect();
+                            const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+                            
+                            if (!(rect.bottom < 0 || rect.top - viewHeight >= 0)) {
+                                if (!element.classList.contains('animate__fadeIn') && 
+                                    !element.classList.contains('animate__fadeInUp') && 
+                                    !element.classList.contains('animate__fadeInLeft') && 
+                                    !element.classList.contains('animate__fadeInRight')) {
+                                    
+                                    if (element.classList.contains('gallery-item')) {
+                                        element.classList.add('animate__fadeIn');
+                                    } else {
+                                        element.classList.add('animate__fadeInUp');
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    
+                    // Run once on load
+                    checkIfInView();
+                    
+                    // Add event listener
+                    window.addEventListener('scroll', checkIfInView);
+                    
+                }, 1000);
+            });
+            
+            // Music control
+            const musicControl = document.getElementById('music-control');
+            const backgroundMusic = document.getElementById('background-music');
+            let isMusicPlaying = false;
+            
+            musicControl.addEventListener('click', function() {
+                if (isMusicPlaying) {
+                    backgroundMusic.pause();
+                    musicControl.innerHTML = '<i class="fas fa-music"></i>';
+                } else {
+                    backgroundMusic.play().catch(function(error) {
+                        console.log('Audio play failed:', error);
+                    });
+                    musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                }
+                
+                isMusicPlaying = !isMusicPlaying;
+            });
+            
+            // Countdown Timer
+            const weddingDate = new Date("June 12, 2025 08:00:00").getTime();
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("days").innerText = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+                
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("days").innerText = "00";
+                    document.getElementById("hours").innerText = "00";
+                    document.getElementById("minutes").innerText = "00";
+                    document.getElementById("seconds").innerText = "00";
+                }
+            }
+            
+            // Update countdown immediately
+            updateCountdown();
+            // Update countdown every second
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            
+            // Form submission
+            const rsvpForm = document.getElementById('rsvp-form');
+            
+            rsvpForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const attendance = document.querySelector('input[name="attendance"]:checked')?.value;
+                const guests = document.getElementById('guests').value;
+                const message = document.getElementById('message').value;
+                
+                // Validate form
+                if (!name || !email || !phone || !attendance) {
+                    alert('Mohon isi semua field yang diperlukan');
+                    return;
+                }
+                
+                // Here you would typically submit the data to a server
+                // For this example, we'll just show a success message
+                alert('Terima kasih! Konfirmasi kehadiran Anda telah berhasil dikirim.');
+                rsvpForm.reset();
+            });
+            
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
